@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erikinyash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4, #45b7d1);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .question {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+
+        .btn-sim {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-sim:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-nao {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            position: absolute;
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+
+        .btn-nao:hover {
+            transform: translateY(-2px);
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <h1>Erikinyash</h1>
+        <div class="question">
+            Vai me aturar pra sempre? 💕
+        </div>
+        
+        <div class="buttons-container">
+            <button class="btn btn-sim" id="btnSim">SIM ❤️</button>
+            <button class="btn btn-nao" id="btnNao">NÃO 💔</button>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <h3>Eu sabia! 😍</h3>
+            <p>Baixando seu presente especial... 💝</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Feito com 💖 para alguém muito especial
+    </div>
+
+    <script>
+        // Função para criar corações flutuantes
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        // Criar corações periodicamente
+        setInterval(createHeart, 1000);
+
+        // Botão SIM
+        document.getElementById('btnSim').addEventListener('click', function() {
+            // Mostrar mensagem de sucesso
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Criar mais corações
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+            
+            // Simular download de vídeo
+            setTimeout(() => {
+                // Criar um link de download fictício (você pode substituir por um vídeo real)
+                const link = document.createElement('a');
+                link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Obrigado por dizer SIM! 💕\n\nEste seria seu vídeo especial...\nSubstitua este arquivo por um vídeo real!');
+                link.download = 'video_especial_erikinyash.txt';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, 2000);
+        });
+
+        // Botão NÃO que foge do mouse
+        const btnNao = document.getElementById('btnNao');
+        const container = document.querySelector('.buttons-container');
+        
+        // Posicionar o botão NÃO inicialmente
+        function positionNaoButton() {
+            const containerRect = container.getBoundingClientRect();
+            const btnWidth = btnNao.offsetWidth;
+            const btnHeight = btnNao.offsetHeight;
+            
+            // Posição inicial (centro-direita)
+            btnNao.style.left = '60%';
+            btnNao.style.top = '50%';
+            btnNao.style.transform = 'translate(-50%, -50%)';
+        }
+        
+        positionNaoButton();
+
+        // Função para mover o botão para posição aleatória
+        function moveNaoButton() {
+            const containerRect = container.getBoundingClientRect();
+            const btnWidth = btnNao.offsetWidth;
+            const btnHeight = btnNao.offsetHeight;
+            
+            // Calcular limites para manter o botão dentro do container
+            const maxLeft = container.offsetWidth - btnWidth;
+            const maxTop = container.offsetHeight - btnHeight;
+            
+            const newLeft = Math.random() * maxLeft;
+            const newTop = Math.random() * maxTop;
+            
+            btnNao.style.left = newLeft + 'px';
+            btnNao.style.top = newTop + 'px';
+            btnNao.style.transform = 'none';
+        }
+
+        // Evento para quando o mouse se aproxima do botão NÃO
+        btnNao.addEventListener('mouseenter', moveNaoButton);
+        btnNao.addEventListener('mouseover', moveNaoButton);
+        
+        // Para dispositivos móveis (touch)
+        btnNao.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            moveNaoButton();
+        });
+
+        // Adicionar alguns efeitos extra quando tentar clicar no NÃO
+        btnNao.addEventListener('click', function(e) {
+            e.preventDefault();
+            moveNaoButton();
+            
+            // Efeito visual de "frustração"
+            btnNao.style.background = 'linear-gradient(45deg, #ff4757, #ff6b6b)';
+            setTimeout(() => {
+                btnNao.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
